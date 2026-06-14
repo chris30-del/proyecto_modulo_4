@@ -183,28 +183,186 @@ Analizar la eficiencia y rendimiento de cada jugador.
 El dashboard está construido con la finalizar de analizar lo siguiente:
 
 ```text
-Jugador
-   │
-   ├── Temporada
-   │
-   ├── Producción Ofensiva(Información a nivel partido)
-   │      ├── Puntos
-   │      ├── Puntos de 2 y % de efectividad
-   │      ├── Puntos de 3 y % de efectividad
-   │      └── Puntos de tiro libre y % de efectividad
-   │
-   ├── Rendimiento en Cancha(Información a nivel jugador)
-   │      ├── Rebotes
-   │      ├── Asistencias
-   │      ├── Perdidas de Balón
-   │      ├── Robos
-   │      ├── Bloqueos
-   │      └── Minutos Jugados
-   │
-   └── Eficiencia de Tiro(Información a nivel total)
-          ├── Tiros de 2(A/M)
-          ├── Tiros de 3 (A/M)
-          └── Distribución de tiros
+# Modelo Dimensional NBA DWH
+
+## Descripción General
+
+El modelo sigue un esquema estrella (*Star Schema*) donde la tabla de hechos `fact_statistics` almacena las estadísticas de los jugadores por partido y se relaciona directamente con las dimensiones de fecha, partido, jugador, equipo y posición inicial.
+
+---
+
+## Tabla de Hechos
+
+### `fact_statistics`
+
+Contiene las métricas estadísticas registradas para cada jugador en cada partido.
+
+| Campo | Tipo |
+|---------|---------|
+| date_id | FK |
+| game_id | FK |
+| player_id | FK |
+| team_id | FK |
+| start_position_id | FK |
+| pts | Medida |
+| reb | Medida |
+| ast | Medida |
+| stl | Medida |
+| blk | Medida |
+| tos | Medida |
+| sec | Medida |
+| fgm | Medida |
+| fga | Medida |
+| fg3m | Medida |
+| fg3a | Medida |
+| ftm | Medida |
+| fta | Medida |
+
+### Granularidad
+
+Cada registro representa:
+
+> Las estadísticas de un jugador en un partido específico, jugando para un equipo determinado, en una fecha determinada y ocupando una posición inicial determinada.
+
+---
+
+## Dimensiones
+
+### `dim_date`
+
+Dimensión temporal utilizada para analizar las estadísticas por diferentes periodos.
+
+| Campo |
+|---------|
+| date_id (PK) |
+| full_date |
+| day_of_month |
+| day_of_week_name |
+| day_of_week_number |
+| is_weekend |
+| month_name |
+| month_number |
+| quarter |
+
+---
+
+### `dim_games`
+
+Dimensión que almacena información de los partidos.
+
+| Campo |
+|---------|
+| game_id (PK) |
+| game_name |
+
+---
+
+### `dim_player`
+
+Dimensión de jugadores.
+
+| Campo |
+|---------|
+| player_id (PK) |
+| player_name |
+
+---
+
+### `dim_team`
+
+Dimensión de equipos de la NBA.
+
+| Campo |
+|---------|
+| team_id (PK) |
+| nickname |
+| city |
+| conference |
+
+---
+
+### `dim_start_position`
+
+Dimensión que representa la posición inicial del jugador dentro del partido.
+
+| Campo |
+|---------|
+| start_position_id (PK) |
+| position_name |
+| flag_holder |
+
+---
+
+## Relaciones
+
+| Tabla Origen | Cardinalidad | Tabla Destino |
+|--------------|-------------|---------------|
+| dim_date | 1:N | fact_statistics |
+| dim_games | 1:N | fact_statistics |
+| dim_player | 1:N | fact_statistics |
+| dim_team | 1:N | fact_statistics |
+| dim_start_position | 1:N | fact_statistics |
+
+---
+
+## Diagrama Lógico
+
+```text
+             +--------------------+
+             | dim_start_position |
+             +--------------------+
+                        |
+                        |
+                        |
+                        *
++-----------+      +------------------+      +-----------+
+| dim_games |-----|  fact_statistics   |-----| dim_date  |
++-----------+      +------------------+      +-----------+
+                        *
+                        |
+                        |
+                  +-----------+
+                  | dim_player|
+                  +-----------+
+
+                        *
+                        |
+                        1
+                        |
+
+```
+
+---
+
+## Claves del Modelo
+
+### Claves Primarias
+
+| Tabla | Clave Primaria |
+|---------|---------|
+| dim_date | date_id |
+| dim_games | game_id |
+| dim_player | player_id |
+| dim_team | team_id |
+| dim_start_position | start_position_id |
+
+### Claves Foráneas en la Tabla de Hechos
+
+| Campo |
+|---------|
+| date_id |
+| game_id |
+| player_id |
+| team_id |
+| start_position_id |
+
+---
+
+## Tipo de Modelo
+
+**Star Schema (Esquema Estrella)**
+
+La tabla `fact_statistics` actúa como tabla central de hechos y todas las dimensiones se conectan directamente a ella, sin relaciones entre dimensiones.
 ```
 
 ---
