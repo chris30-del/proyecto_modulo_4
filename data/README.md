@@ -110,4 +110,4 @@ PLAYERS
 | Estadísticas jugador-partido | ~650,000 registros |
 
 
-Mientras el dataset de Wyatt Walsh está orientado a una **base histórica completa de la NBA (1946–actualidad) con eventos play-by-play**, el dataset de Nathan Lauga está enfocado en **estadísticas agregadas de juegos y rendimiento de jugadores desde 2004**, siendo más ligero y adecuado para proyectos de Machine Learning, análisis exploratorio y predicción de resultados.
+El dataset de Nathan Lauga está enfocado en **estadísticas agregadas de juegos y rendimiento de jugadores desde 2004**, siendo ligero y adecuado para proyectos de Machine Learning, análisis exploratorio y predicción de resultados.
