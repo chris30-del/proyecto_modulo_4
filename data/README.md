@@ -1,4 +1,4 @@
-# Resumen Ejecutivo – NBA Games Dataset (Nathan Lauga)
+# :basketball: Resumen Ejecutivo – NBA Games Dataset (Nathan Lauga)
 
 Este proyecto utiliza el dataset **NBA Games**, una colección de datos históricos de la NBA obtenida a través de la API oficial de estadísticas de la NBA. El conjunto de datos cubre partidos desde la temporada **2004 hasta diciembre de 2020** e integra información de juegos, estadísticas individuales de jugadores, rankings de equipos y datos maestros de franquicias y jugadores.
 
