@@ -180,16 +180,10 @@ Analizar la eficiencia y rendimiento de cada jugador.
 
 # Modelo Analítico
 
-El dashboard está construido con la finalizar de analizar lo siguiente:
-
-```text
-# Modelo Dimensional NBA DWH
-
-## Descripción General
 
 El modelo sigue un esquema estrella (*Star Schema*) donde la tabla de hechos `fact_statistics` almacena las estadísticas de los jugadores por partido y se relaciona directamente con las dimensiones de fecha, partido, jugador, equipo y posición inicial.
 
----
+
 
 ## Tabla de Hechos
 
@@ -291,44 +285,24 @@ Dimensión que representa la posición inicial del jugador dentro del partido.
 | position_name |
 | flag_holder |
 
----
-
-## Relaciones
-
-| Tabla Origen | Cardinalidad | Tabla Destino |
-|--------------|-------------|---------------|
-| dim_date | 1:N | fact_statistics |
-| dim_games | 1:N | fact_statistics |
-| dim_player | 1:N | fact_statistics |
-| dim_team | 1:N | fact_statistics |
-| dim_start_position | 1:N | fact_statistics |
-
----
 
 ## Diagrama Lógico
 
 ```text
-             +--------------------+
-             | dim_start_position |
-             +--------------------+
-                        |
-                        |
-                        |
-                        *
+                  +--------------------+
+                  | dim_start_position |
+                  +--------------------+
+                            |
+                            |
+                            |
 +-----------+      +------------------+      +-----------+
 | dim_games |-----|  fact_statistics   |-----| dim_date  |
 +-----------+      +------------------+      +-----------+
-                        *
-                        |
-                        |
-                  +-----------+
-                  | dim_player|
-                  +-----------+
-
-                        *
-                        |
-                        1
-                        |
+                     |              |
+                     |              |
+                +-----------+   +-----------+
+                | dim_player|   | dim_team  |
+                +-----------+   +-----------+
 
 ```
 
