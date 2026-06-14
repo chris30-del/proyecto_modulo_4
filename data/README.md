@@ -82,7 +82,7 @@ Incluye información como:
 
 Esta tabla es especialmente útil para generar variables predictivas previas a cada partido.
 
-## Modelo Relacional Simplificado
+## ⚙️ Modelo Relacional Simplificado
 
 ```text
 TEAMS
@@ -98,7 +98,7 @@ PLAYERS
   └── GAMES_DETAILS
 ```
 
-## Cobertura del Dataset
+## 🛢 Cobertura del Dataset
 
 | Métrica | Valor Aproximado |
 |----------|-----------------|
