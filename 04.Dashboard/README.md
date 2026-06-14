@@ -1,12 +1,12 @@
-# Resumen Ejecutivo – Dashboard NBA Analytics
+# 👨🏻‍💻 Resumen Ejecutivo – Dashboard NBA Analytics
 
-## Descripción General
+## 📈 Descripción General
 
 Este dashboard interactivo fue desarrollado para analizar el rendimiento histórico de jugadores de la NBA mediante indicadores ofensivos, eficiencia de tiro y desempeño en cancha.
 
 La solución está estructurada en **4 páginas principales**.
 
-## Objetivo
+## 🎯 Objetivo
 
 Proporcionar una herramienta visual para:
 
@@ -17,9 +17,9 @@ Proporcionar una herramienta visual para:
 
 ---
 
-# Estructura del Dashboard
+# 🧱 Estructura del Dashboard
 
-## 1. Portada
+## 📒1. Portada
 
 Página de navegación principal.
 
@@ -35,7 +35,7 @@ Servir como punto de entrada para la exploración del dashboard.
 
 ---
 
-## 2. Puntos por Partido
+## 🗑️ 2. Puntos por Partido
 
 Módulo enfocado en la producción ofensiva de los jugadores.
 
@@ -70,7 +70,7 @@ Analizar cómo evoluciona la capacidad anotadora de los jugadores a lo largo de 
 
 ---
 
-## 3. Rendimiento en Cancha
+## 🔝 3. Rendimiento en Cancha
 
 Módulo orientado al análisis integral del desempeño durante los partidos.
 
@@ -126,7 +126,7 @@ Evaluar el impacto global de un jugador más allá de la anotación.
 
 ---
 
-## 4. Tiros
+## 🎯 4. Tiros
 
 Módulo especializado en análisis de volumen y eficiencia de lanzamiento.
 
@@ -178,7 +178,7 @@ Analizar la eficiencia y rendimiento de cada jugador.
 
 ---
 
-# Modelo Analítico
+# 🛢 Modelo Analítico
 
 
 El modelo sigue un esquema estrella (*Star Schema*) donde la tabla de hechos `fact_statistics` almacena las estadísticas de los jugadores por partido y se relaciona directamente con las dimensiones de fecha, partido, jugador, equipo y posición inicial.
@@ -187,7 +187,7 @@ El modelo sigue un esquema estrella (*Star Schema*) donde la tabla de hechos `fa
 
 ## Tabla de Hechos
 
-### `fact_statistics`
+### 𝄜 `fact_statistics`
 
 Contiene las métricas estadísticas registradas para cada jugador en cada partido.
 
@@ -222,7 +222,7 @@ Cada registro representa:
 
 ## Dimensiones
 
-### `dim_date`
+### 📆`dim_date`
 
 Dimensión temporal utilizada para analizar las estadísticas por diferentes periodos.
 
@@ -240,7 +240,7 @@ Dimensión temporal utilizada para analizar las estadísticas por diferentes per
 
 ---
 
-### `dim_games`
+### 🆚 `dim_games`
 
 Dimensión que almacena información de los partidos.
 
@@ -251,7 +251,7 @@ Dimensión que almacena información de los partidos.
 
 ---
 
-### `dim_player`
+### 🏃🏽‍♂️`dim_player`
 
 Dimensión de jugadores.
 
@@ -262,7 +262,7 @@ Dimensión de jugadores.
 
 ---
 
-### `dim_team`
+### 👥`dim_team`
 
 Dimensión de equipos de la NBA.
 
@@ -275,7 +275,7 @@ Dimensión de equipos de la NBA.
 
 ---
 
-### `dim_start_position`
+### 🏀`dim_start_position`
 
 Dimensión que representa la posición inicial del jugador dentro del partido.
 
@@ -308,9 +308,9 @@ Dimensión que representa la posición inicial del jugador dentro del partido.
 
 ---
 
-## Claves del Modelo
+## Llaves del Modelo
 
-### Claves Primarias
+### Llaves Primarias
 
 | Tabla | Clave Primaria |
 |---------|---------|
@@ -320,7 +320,7 @@ Dimensión que representa la posición inicial del jugador dentro del partido.
 | dim_team | team_id |
 | dim_start_position | start_position_id |
 
-### Claves Foráneas en la Tabla de Hechos
+### Llaves Foráneas en la Tabla de Hechos
 
 | Campo |
 |---------|
