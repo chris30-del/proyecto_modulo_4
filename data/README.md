@@ -2,7 +2,7 @@
 
 Este proyecto utiliza el dataset **NBA Games**, una colección de datos históricos de la NBA obtenida a través de la API oficial de estadísticas de la NBA. El conjunto de datos cubre partidos desde la temporada **2004 hasta diciembre de 2020** e integra información de juegos, estadísticas individuales de jugadores, rankings de equipos y datos maestros de franquicias y jugadores.
 
-## Estructura General de la Información
+## 🏗️ Estructura General de la Información
 
 La información está organizada en **5 archivos CSV** que pueden relacionarse mediante identificadores de equipos, jugadores y partidos. El modelo está orientado al análisis estadístico, predicción de resultados y desarrollo de modelos de Machine Learning.
 
