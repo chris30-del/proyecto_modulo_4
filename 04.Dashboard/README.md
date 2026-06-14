@@ -330,14 +330,6 @@ Dimensión que representa la posición inicial del jugador dentro del partido.
 | team_id |
 | start_position_id |
 
----
-
-## Tipo de Modelo
-
-**Star Schema (Esquema Estrella)**
-
-La tabla `fact_statistics` actúa como tabla central de hechos y todas las dimensiones se conectan directamente a ella, sin relaciones entre dimensiones.
-```
 
 ---
 
