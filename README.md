@@ -13,7 +13,7 @@
 | **Infraestructura**    | Aurora PostgreSQL en AWS (mismo clúster `aurora-mod4` del módulo, esquema `nba_dwh`)                                                                                                    |
 | **ETL**                | `etl_pipeline.py` end-to-end con pandas, SQLAlchemy y validaciones posteriores a la carga                                                                                               |
 | **SQL avanzado**       | 3 Queries; 2 con CTE, para obtener jugadores con mayores puntos anotados por año, y con mayor número de porcentajes de efectividad. Estos resultados los vamos a ocupar en el Dashboard para ver el comportamiento de cada jugador                                                                                                                                                                                |
-| **Dashboard**          | 4 páginas, portada, puntos por partido, rendimiento en cancha y tiros                                                                                                                                                                              |
+| **Dashboard**          | 4 páginas; portada, puntos por partido, rendimiento en cancha y tiros                                                                                                                                                                              |
 
 ## 🏀 Contexto de la NBA
 
@@ -314,6 +314,8 @@ En el caso de la NBA, se pueden definir tres granos:
 Para el caso de nuestro proyecto nos vamos a quedar con el Grano 3. Con este grano se nos permite diferencia si un jugador fue titular o no durante el partido; lo cual es beneficioso para nuestro análisis, ya que normalmente los equipos de la NBA siempre comienzan con los jugadores con mejores aptitudes/habilidades; entonces podríamos diferenciar entre titulares o no, también nos permite analizar si hay diferencias en las estadísticas según la posición inicial de cada jugador. 
 
 ## :computer: SQL avanzado destacado
+
+Tres queries en [`Queries.sql`](02.Scripts_sql/Queries.sql) que cubren las técnicas del módulo:
 
 ### 1. Mediana de minutos jugados por cada tipo de jugador(percentile_cont)
 
