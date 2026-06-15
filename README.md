@@ -88,6 +88,7 @@ Es importante destacar que Aurora actúa como el destino analítico de la soluci
 ## Consideraciones antes correr el ETL
 ### AWS
 * Tener un clúster de base de datos (aurora-mod4), el cual debe de estar disponible y utilizando el motor Aurora PostgreSQL. Dentro de este cluster debe de existir una instancia (aurora-mod4-instance-1).
+* Tener el punto de enlace y la contraseña para poder correr el etl.
 ### Python 
 * Tener version de python 3.12.13 (ideal).
 * Tener instaladas las siguientes paqueterias: kaggle, pandas, os, sqlalchemy y re.
@@ -113,6 +114,196 @@ proyecto_modulo_4/
     ├── NBA_Dash_V1.pbix          ← dashboard Power BI
     └── README.md                 ← Expliacion del Dashboard
 ```
+## :wrench: Cómo ejecutar
+
+### 1. Setup del schema en Aurora
+Asume que ya tienes tu cluster e instancia de Aurora `aurora-mod4`.  Desde DBeaver ejecutar:
+
+```bash
+     -f 02.Scrips_sql/DDL_nba.sql
+```
+Esto crea el schema `nba_dwh_py` con las 6 tablas vacias. 
+
+### 2. Poblar las 5 dimensiones y la tabla de hechos
+
+Leer los datos desde la API de kaggle y cargarlos a la base de datos
+```bash
+# Instalar dependencias (si no las tienes ya del Tema 04)
+pip install kaggle pandas os sqlalchemy re
+
+# Leer los CSV's
+python 03.Scrips_py/etl.ipynb \
+    --host aurora-mod4.cluster-XXX.us-east-1.rds.amazonaws.com \
+    --password TU_PASSWORD \
+    --database northwind 
+```
+Esto pobla las tablas que creamos en el paso 1. 
+
+
+### 3. Conectar/ Reconectar nuestro Dashboard
+
+Aqui ya tenemos el Dashboard, en caso de requerir una reconección : 
+
+```bash
+1. Ir a obtenr datos y buscar Base de datos PostgreSQL
+2. En Servidor poner el punto y de enlace y la contraseña 
+3. Seleccionar las tablas que pertenecen a nbs_dwh_py y cargarlas
+4. Poner la opcion de importar
+```
+Una vez cargado el dwh, se habilita la informacion y las graficas del dashboard
+
+
+## 🛢 Modelo Dimensional
+
+
+El modelo sigue un esquema estrella (*Star Schema*) donde la tabla de hechos `fact_statistics` almacena las estadísticas de los jugadores por partido y se relaciona directamente con las dimensiones de fecha, partido, jugador, equipo y posición inicial.
+
+
+
+### Tabla de Hechos
+
+#### 𝄜 `fact_statistics`
+
+Contiene las métricas estadísticas registradas para cada jugador en cada partido.
+
+| Campo | Tipo |
+|---------|---------|
+| date_id | FK |
+| game_id | FK |
+| player_id | FK |
+| team_id | FK |
+| start_position_id | FK |
+| pts | Medida |
+| reb | Medida |
+| ast | Medida |
+| stl | Medida |
+| blk | Medida |
+| tos | Medida |
+| sec | Medida |
+| fgm | Medida |
+| fga | Medida |
+| fg3m | Medida |
+| fg3a | Medida |
+| ftm | Medida |
+| fta | Medida |
+
+### Granularidad
+
+Cada registro representa:
+
+> Las estadísticas de un jugador en un partido específico, jugando para un equipo determinado, en una fecha determinada y ocupando una posición inicial determinada.
+
+---
+
+### Dimensiones
+
+#### 📆`dim_date`
+
+Dimensión temporal utilizada para analizar las estadísticas por diferentes periodos.
+
+| Campo |
+|---------|
+| date_id (PK) |
+| full_date |
+| day_of_month |
+| day_of_week_name |
+| day_of_week_number |
+| is_weekend |
+| month_name |
+| month_number |
+| quarter |
+
+---
+
+#### 🆚 `dim_games`
+
+Dimensión que almacena información de los partidos.
+
+| Campo |
+|---------|
+| game_id (PK) |
+| game_name |
+
+---
+
+#### 🏃🏽‍♂️`dim_player`
+
+Dimensión de jugadores.
+
+| Campo |
+|---------|
+| player_id (PK) |
+| player_name |
+
+---
+
+#### 👥`dim_team`
+
+Dimensión de equipos de la NBA.
+
+| Campo |
+|---------|
+| team_id (PK) |
+| nickname |
+| city |
+| conference |
+
+---
+
+#### 🏀`dim_start_position`
+
+Dimensión que representa la posición inicial del jugador dentro del partido.
+
+| Campo |
+|---------|
+| start_position_id (PK) |
+| position_name |
+| flag_holder |
+
+
+### Esquema estrella
+
+```text
+                  +--------------------+
+                  | dim_start_position |
+                  +--------------------+
+                            |
+                            |
+                            |
++-----------+      +------------------+      +-----------+
+| dim_games |-----|  fact_statistics   |-----| dim_date  |
++-----------+      +------------------+      +-----------+
+                     |              |
+                     |              |
+                +-----------+   +-----------+
+                | dim_player|   | dim_team  |
+                +-----------+   +-----------+
+
+```
+
+---
+
+### Llaves del Modelo
+
+#### Llaves Primarias
+
+| Tabla | Clave Primaria |
+|---------|---------|
+| dim_date | date_id |
+| dim_games | game_id |
+| dim_player | player_id |
+| dim_team | team_id |
+| dim_start_position | start_position_id |
+
+#### Llaves Foráneas en la Tabla de Hechos
+
+| Campo |
+|---------|
+| date_id |
+| game_id |
+| player_id |
+| team_id |
+| start_position_id |
 
 
 
