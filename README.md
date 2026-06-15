@@ -388,7 +388,7 @@ order by
 ;
 ```
 
-### 3. Jugador con mayor porcentaje de tiro (se considera la suma de los 3 porcentajes) y con más del 50 % de los partidos jugado por año..(CTE referencia multiple y row_number) 
+### 3. Jugador con mayor porcentaje de tiro (se considera la suma de los 3 porcentajes) y con más del 50 % de los partidos jugado por año(CTE referencia multiple y row_number) 
 
 
 ```sql
