@@ -6,7 +6,7 @@
 
 | Campo                  | Valor                                                                                                                                                                                   |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Pregunta analítica** | Entre 2005 y 2019, ¿hubo aumento en los puntos promedio por partido?, se explica principalmente por ¿la mejora de los jugadores en los porcentajes de tiro de campo, triples y tiros libres? |
+| **Pregunta analítica** | Entre 2005 y 2019, ¿hubo aumento en los puntos promedio por partido?, se explica principalmente por ¿la mejora o el deterioro de los jugadores en los porcentajes de tiro de campo, triples y tiros libres? |
 | **Dataset**            | NBA Games Data                                                                                                                                                                          |
 | **Fuente**             | [nba.data — Bases de datos](https://www.kaggle.com/datasets/nathanlauga/nba-games/data)                                                                                                 |
 | **Modelo**             | Esquema estrella con 1 tabla de hechos y 5 dimensiones (game, player, team, start_position y date)                                                                                      |
