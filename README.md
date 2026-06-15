@@ -517,7 +517,7 @@ Cuatro péginas generadas en Power BI [`04.Dashboard/NBA_Dash_V1`](04.Dashboard/
 ![Rendimiento en Cancha](04.Dashboard/rendimiento.png)
 
 ### 4. Tiros 
-![Tiros](04.Dashboard/puntos.png)
+![Tiros](04.Dashboard/tiros.png)
 
 
 
