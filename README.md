@@ -93,7 +93,7 @@ Es importante destacar que Aurora actúa como el destino analítico de la soluci
 * Tener instaladas las siguientes paqueterias: kaggle, pandas, os, sqlalchemy y re.
 
 ##📁 Estructura del repositorio
-
+```
 proyecto_modulo_4/
 │
 ├── README.md                     ← documentación principal
@@ -112,7 +112,7 @@ proyecto_modulo_4/
 └── 04.Dashboard/
     ├── NBA_Dash_V1.pbix          ← dashboard Power BI
     └── README.md                 ← Expliacion del Dashboard
-
+```
 
 
 
