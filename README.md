@@ -310,6 +310,7 @@ En el caso de la NBA, se pueden definir tres granos:
 * Grano 1: por equipo, juegos que tuvo cada equipo por temporada, partidos ganados vs partidos perdidos. 
 * Grano 2: por partido, partido concretado en una temporada, estadísticas básicas por equipo. 
 * Grano 3: por partido y jugador, registro de estadísticas de un jugador por juego, estadísticas a nivel jugador. 
+
 Para el caso de nuestro proyecto nos vamos a quedar con el Grano 3. Con este grano se nos permite diferencia si un jugador fue titular o no durante el partido; lo cual es beneficioso para nuestro análisis, ya que normalmente los equipos de la NBA siempre comienzan con los jugadores con mejores aptitudes/habilidades; entonces podríamos diferenciar entre titulares o no, también nos permite analizar si hay diferencias en las estadísticas según la posición inicial de cada jugador. 
 
 
