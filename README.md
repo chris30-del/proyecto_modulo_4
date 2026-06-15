@@ -500,9 +500,18 @@ where
 	rn = 1
 
 ;
-
-
 ```
+## :bar_chart: Visualizaciones
+
+Cuatro péginas generadas en Power BI [`04.Dashboard/NBA_Dash_V1`](04.Dashboard/NBA_Dash_V1.pbix). Si se quiere ver la documentaciòn del tablero consultar  [`04.Dashboard/README`](04.Dashboard/README.md).
+
+### 1. Portada 
+
+
+
+
+
+
 
 
 
