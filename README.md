@@ -506,6 +506,21 @@ where
 Cuatro péginas generadas en Power BI [`04.Dashboard/NBA_Dash_V1`](04.Dashboard/NBA_Dash_V1.pbix). Si se quiere ver la documentaciòn del tablero consultar  [`04.Dashboard/README`](04.Dashboard/README.md).
 
 ### 1. Portada 
+![Portada](04.Dashboard/portada.png)
+
+### 2. Puntos por Partido 
+
+![Puntos por Partido](04.Dashboard/puntos.png)
+
+### 3. Rendimiento en Cancha 
+
+![Rendimiento en Cancha](04.Dashboard/rendimiento.png)
+
+### 4. Tiros 
+![Tiros](04.Dashboard/puntos.png)
+
+
+
 
 
 
