@@ -286,7 +286,7 @@ Dimensión que representa la posición inicial del jugador dentro del partido.
 | flag_holder |
 
 
-## Diagrama Lógico
+## Esquema estrella
 
 ```text
                   +--------------------+
