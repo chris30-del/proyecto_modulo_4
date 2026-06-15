@@ -6,7 +6,7 @@
 
 | Campo                  | Valor                                                                                                                                                                                   |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Pregunta analítica** | Entre 2005 y 2019, ¿el aumento en los puntos promedio por partido se explica principalmente por la mejora de los jugadores en los porcentajes de tiro de campo, triples y tiros libres? |
+| **Pregunta analítica** | Entre 2005 y 2019, ¿hubo aumento en los puntos promedio por partido?, se explica principalmente por ¿la mejora de los jugadores en los porcentajes de tiro de campo, triples y tiros libres? |
 | **Dataset**            | NBA Games Data                                                                                                                                                                          |
 | **Fuente**             | [nba.data — Bases de datos](https://www.kaggle.com/datasets/nathanlauga/nba-games/data)                                                                                                 |
 | **Modelo**             | Esquema estrella con 1 tabla de hechos y 5 dimensiones (game, player, team, start_position y date)                                                                                      |
@@ -503,7 +503,7 @@ where
 ```
 ## :bar_chart: Visualizaciones
 
-Cuatro péginas generadas en Power BI [`04.Dashboard/NBA_Dash_V1`](04.Dashboard/NBA_Dash_V1.pbix). Si se quiere ver la documentaciòn del tablero consultar  [`04.Dashboard/README`](04.Dashboard/README.md).
+Cuatro páginas generadas en Power BI [`04.Dashboard/NBA_Dash_V1`](04.Dashboard/NBA_Dash_V1.pbix). Si se quiere ver la documentación del tablero consultar  [`04.Dashboard/README`](04.Dashboard/README.md).
 
 ### 1. Portada 
 ![Portada](04.Dashboard/portada.png)
@@ -520,9 +520,11 @@ Cuatro péginas generadas en Power BI [`04.Dashboard/NBA_Dash_V1`](04.Dashboard/
 ![Tiros](04.Dashboard/tiros.png)
 
 
+## :mag: Hallazgos principales
 
+1. **Entre 2005 y 2019 hubo un aumento promedio de 22.30 (14.47%) puntos por partido, sin embargo los pocentajes de tiro se mantuvieron en una brecha pequeña. Para el porcentaje de tiros de 3 se mantuvo entre 35.36-36.76, para el porcentaje de tiros de 2 se mantuvo entre 45.32-46.88 y para el tiro libre se mantuvo entre 75.76-78.22; para este último la gráfica de si tiene una tendencia a positiva. Entonces de este resultado podemos decir que el aumento en la cantidad de puntos por partido no se le puede atribuir a una mejora en los porcentajes de tiro. 
 
-
+2.** Segundo hallazgo 
 
 
 
