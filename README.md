@@ -92,7 +92,7 @@ Es importante destacar que Aurora actúa como el destino analítico de la soluci
 * Tener version de python 3.12.13 (ideal).
 * Tener instaladas las siguientes paqueterias: kaggle, pandas, os, sqlalchemy y re.
 
-##📁 Estructura del repositorio
+## 📁 Estructura del repositorio
 ```
 proyecto_modulo_4/
 │
