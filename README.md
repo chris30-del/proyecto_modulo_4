@@ -12,8 +12,8 @@
 | **Modelo**             | Esquema estrella con 1 tabla de hechos y 5 dimensiones (game, player, team, start_position y date)                                                                                      |
 | **Infraestructura**    | Aurora PostgreSQL en AWS (mismo clúster `aurora-mod4` del módulo, esquema `nba_dwh`)                                                                                                    |
 | **ETL**                | `etl_pipeline.py` end-to-end con pandas, SQLAlchemy y validaciones posteriores a la carga                                                                                               |
-| **SQL avanzado**       | Pendiente                                                                                                                                                                               |
-| **Dashboard**          | Pendiente                                                                                                                                                                               |
+| **SQL avanzado**       | 2 Queries con CTE, para obtener jugadores con mayores puntos anotados por año, y con mayor número de porcentajes de efectividad. Estos resultados los vamos a ocupar en el Dashboard para ver el comportamiento de cada jugador                                                                                                                                                                                |
+| **Dashboard**          | 4 páginas, portada, puntos por partido, rendimiento en cancha y tiros                                                                                                                                                                              |
 
 ## 🏀 Contexto de la NBA
 
@@ -82,17 +82,36 @@ Es importante destacar que Aurora actúa como el destino analítico de la soluci
                            ▼
         ┌──────────────────────────────────────┐
         │  Dashboard: NBA Analytics(4 páginas) │
-        │  Queries analíticas SQL (5 queries)  │
+        │  Queries analíticas SQL (2 queries)  │
         └──────────────────────────────────────┘
 ```
-# Consideraciones antes correr el ETL
-## AWS
+## Consideraciones antes correr el ETL
+### AWS
 * Tener un clúster de base de datos (aurora-mod4), el cual debe de estar disponible y utilizando el motor Aurora PostgreSQL. Dentro de este cluster debe de existir una instancia (aurora-mod4-instance-1).
-## Python 
+### Python 
 * Tener version de python 3.12.13 (ideal).
 * Tener instaladas las siguientes paqueterias: kaggle, pandas, os, sqlalchemy y re.
 
+##📁 Estructura del repositorio
 
+proyecto_modulo_4/
+│
+├── README.md                     ← documentación principal
+│
+├── 01.Data/
+│   ├── nba_data.zip              ← archivos .csv, solo utilizar en caso de que la API no funcione
+│   └── README.md                 ← explicación de como esta la data 
+│
+├── 02.Scrips_sql/
+│   ├── DDL_nba.sql               ← Data Definition Language
+│   └── Queries.sql               ← consultas con CTE y funciones de ventana
+│
+├── 03.Scrips_py/
+│   ├── etl.ipynb                 ← ETL
+│
+└── 04.Dashboard/
+    ├── NBA_Dash_V1.pbix          ← dashboard Power BI
+    └── README.md                 ← Expliacion del Dashboard
 
 
 
