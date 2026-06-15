@@ -178,7 +178,7 @@ Analizar la eficiencia y rendimiento de cada jugador.
 
 ---
 
-# 🛢 Modelo Analítico
+# 🛢 Modelo Dimensional
 
 
 El modelo sigue un esquema estrella (*Star Schema*) donde la tabla de hechos `fact_statistics` almacena las estadísticas de los jugadores por partido y se relaciona directamente con las dimensiones de fecha, partido, jugador, equipo y posición inicial.
