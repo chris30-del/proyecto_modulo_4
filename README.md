@@ -4,51 +4,53 @@
 
 ## 📋 Resumen ejecutivo
 
-| Campo                  | Valor                                                                                                                                                                                   |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Pregunta analítica** | Entre 2005 y 2019, ¿hubo aumento en los puntos promedio por partido?, se explica principalmente por ¿la mejora o el deterioro de los jugadores en los porcentajes de tiro de campo, triples y tiros libres? |
-| **Dataset**            | NBA Games Data                                                                                                                                                                          |
-| **Fuente**             | [nba.data — Bases de datos](https://www.kaggle.com/datasets/nathanlauga/nba-games/data)                                                                                                 |
-| **Modelo**             | Esquema estrella con 1 tabla de hechos y 5 dimensiones (game, player, team, start_position y date)                                                                                      |
-| **Infraestructura**    | Aurora PostgreSQL en AWS (mismo clúster `aurora-mod4` del módulo, esquema `nba_dwh`)                                                                                                    |
-| **ETL**                | `etl_pipeline.py` end-to-end con pandas, SQLAlchemy y validaciones posteriores a la carga                                                                                               |
-| **SQL avanzado**       | 3 Queries; 2 con CTE, para obtener jugadores con mayores puntos anotados por año, y con mayor número de porcentajes de efectividad. Estos resultados los vamos a ocupar en el Dashboard para ver el comportamiento de cada jugador                                                                                                                                                                                |
-| **Dashboard**          | 4 páginas; portada, puntos por partido, rendimiento en cancha y tiros                                                                                                                                                                              |
+| Campo                  | Valor                                                                                                                                                                                                                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Pregunta analítica** | Entre 2005 y 2019, el promedio de puntos por partido en la NBA aumentó de forma considerable. ¿Este incremento puede explicarse por una mejora en la efectividad de los tiros de campo, los triples y los tiros libres, o responde a cambios en el estilo de juego de la liga? |
+| **Dataset**            | NBA Games Data                                                                                                                                                                                                                                                                 |
+| **Fuente**             | [nba.data — Bases de datos](https://www.kaggle.com/datasets/nathanlauga/nba-games/data)                                                                                                                                                                                        |
+| **Modelo**             | Esquema estrella compuesto por 1 tabla de hechos y 5 dimensiones (`game`, `player`, `team`, `start_position` y `date`).                                                                                                                                                        |
+| **Infraestructura**    | Amazon Aurora PostgreSQL en AWS (clúster `aurora-mod4`, esquema `nba_dwh_py`).                                                                                                                                                                                                    |
+| **ETL**                | Proceso ETL end-to-end implementado en `etl.ipynb`, utilizando `pandas`, `SQLAlchemy` y validaciones posteriores a la carga.                                                                                                                                             |
+| **SQL avanzado**       | Tres consultas SQL avanzadas, dos de ellas utilizando CTE y funciones de ventana, para identificar a los jugadores con mayor cantidad de puntos anotados y con mayor efectividad de tiro por temporada. Los resultados se utilizan como insumo para el dashboard.              |
+| **Dashboard**          | Dashboard desarrollado en Power BI con cuatro páginas: portada, puntos por partido, rendimiento en cancha y tiros.                                                                                                                                                             |
 
 ## 🏀 Contexto de la NBA
 
-La NBA (*National Basketball Association*) es la liga profesional de baloncesto más importante del mundo. Está conformada por 30 equipos divididos en dos conferencias: la Conferencia Este y la Conferencia Oeste.
+La **National Basketball Association (NBA)** es la liga profesional de baloncesto más importante del mundo. Está conformada por 30 equipos distribuidos en dos conferencias: la Conferencia Este (*Eastern Conference*) y la Conferencia Oeste (*Western Conference*).
 
-**Conferencia Este (Eastern Conference):** Atlanta Hawks, Boston Celtics, Brooklyn Nets, Charlotte Hornets, Chicago Bulls, Cleveland Cavaliers, Detroit Pistons, Indiana Pacers, Miami Heat, Milwaukee Bucks, New York Knicks, Orlando Magic, Philadelphia 76ers, Toronto Raptors y Washington Wizards.
+**Conferencia Este:** Atlanta Hawks, Boston Celtics, Brooklyn Nets, Charlotte Hornets, Chicago Bulls, Cleveland Cavaliers, Detroit Pistons, Indiana Pacers, Miami Heat, Milwaukee Bucks, New York Knicks, Orlando Magic, Philadelphia 76ers, Toronto Raptors y Washington Wizards.
 
-**Conferencia Oeste (Western Conference):** Dallas Mavericks, Denver Nuggets, Golden State Warriors, Houston Rockets, Los Angeles Clippers, Los Angeles Lakers, Memphis Grizzlies, Minnesota Timberwolves, New Orleans Pelicans, Oklahoma City Thunder, Phoenix Suns, Portland Trail Blazers, Sacramento Kings, San Antonio Spurs y Utah Jazz.
+**Conferencia Oeste:** Dallas Mavericks, Denver Nuggets, Golden State Warriors, Houston Rockets, Los Angeles Clippers, Los Angeles Lakers, Memphis Grizzlies, Minnesota Timberwolves, New Orleans Pelicans, Oklahoma City Thunder, Phoenix Suns, Portland Trail Blazers, Sacramento Kings, San Antonio Spurs y Utah Jazz.
 
-Durante la temporada regular, cada equipo disputa un total de 82 partidos con el objetivo de acumular la mayor cantidad posible de victorias y obtener una mejor posición en la clasificación de su conferencia. Los ocho mejores equipos de cada conferencia avanzan a los *playoffs*, donde compiten en series eliminatorias hasta definir al campeón de cada conferencia. En esta etapa, todas las rondas se juegan al mejor de siete partidos.
+Durante la temporada regular, cada equipo disputa **82 partidos** con el objetivo de obtener la mayor cantidad posible de victorias y asegurar una buena posición en la clasificación de su conferencia. Los ocho mejores equipos de cada conferencia avanzan a los *playoffs*, donde compiten en series eliminatorias al mejor de siete partidos para definir al campeón de cada conferencia.
 
-Finalmente, los campeones de las conferencias Este y Oeste se enfrentan en las Finales de la NBA para disputar el título de la liga, también bajo el formato de una serie al mejor de siete partidos.
+Finalmente, los campeones de ambas conferencias se enfrentan en las **Finales de la NBA**, también bajo el formato de una serie al mejor de siete partidos, para disputar el campeonato de la liga.
+
 
 ## 🎯 Problema y motivación
 
-Durante el periodo de 2005 a 2019, los partidos de la NBA mostraron un incremento en la cantidad promedio de puntos anotados por juego. Sin embargo, no está claro si este aumento se debe principalmente a:
+Entre 2005 y 2019, la NBA experimentó un incremento sostenido en la cantidad promedio de puntos anotados por partido. Sin embargo, no está claro si este aumento se debe principalmente a:
 
-* Una mejora en la eficiencia de tiro de campo (*field goals*).
-* Un mayor uso y una mayor precisión en los tiros de tres puntos.
+* Una mejora en la efectividad de los tiros de campo (*field goals*).
+* Un mayor volumen y una mayor efectividad en los tiros de tres puntos.
 * Una mejora en la efectividad de los tiros libres.
 
-El reto consiste en determinar si el incremento en el rendimiento ofensivo se explica por una mejora en la eficiencia individual de los jugadores o por otros factores relacionados con la evolución del juego.
+El objetivo de este proyecto es determinar si el incremento en la producción ofensiva puede explicarse por una mayor eficiencia individual de los jugadores o si responde a cambios en el estilo de juego de la liga.
 
-Este proyecto busca responder dos preguntas concretas:
+Para ello, se plantean las siguientes preguntas de investigación:
 
-1. **¿Hubo un aumento en los porcentajes de efectividad de tiro durante este periodo?**
-2. **¿Quiénes fueron los jugadores con mayor número de puntos anotados (tiros de campo, triples y tiros libres) en cada año?**
+1. **¿Hubo un aumento en los porcentajes de efectividad de tiro durante el periodo 2005–2019?**
+2. **¿Qué jugadores lideraron la anotación en cada temporada considerando tiros de campo, triples y tiros libres?**
 
 ## 📦 Origen de los datos
 
-Los datos provienen de un conjunto de datos disponible en **Kaggle**, el cual es sometido a un proceso ETL (*Extract, Transform, Load*) que permite su descarga, transformación y posterior carga en el esquema `nba_dwh` dentro de un clúster Aurora PostgreSQL.
+Los datos utilizados en este proyecto provienen de un conjunto de datos publicado en **Kaggle**. Estos son procesados mediante un flujo ETL (*Extract, Transform, Load*), encargado de su extracción, transformación y carga en el esquema `nba_dwh_py` de una base de datos **Amazon Aurora PostgreSQL**.
 
-Es importante destacar que Aurora actúa como el destino analítico de la solución, es decir, el repositorio donde se centraliza y organiza la información para su explotación mediante consultas y visualizaciones, mientras que Kaggle constituye la fuente original de los datos.
+En esta arquitectura, **Kaggle** constituye la fuente de datos, mientras que **Amazon Aurora PostgreSQL** funciona como el repositorio analítico donde la información es almacenada, organizada y preparada para su explotación mediante consultas SQL y visualizaciones en Power BI.
 
 ### Flujo end-to-end
+
 
 ```
         ┌──────────────────────────────────────┐
@@ -85,13 +87,27 @@ Es importante destacar que Aurora actúa como el destino analítico de la soluci
         │  Queries analíticas SQL (2 queries)  │
         └──────────────────────────────────────┘
 ```
-## Consideraciones antes correr el ETL
+## Consideraciones antes de ejecutar el ETL
+
 ### AWS
-* Tener un clúster de base de datos (aurora-mod4), el cual debe de estar disponible y utilizando el motor Aurora PostgreSQL. Dentro de este cluster debe de existir una instancia (aurora-mod4-instance-1).
-* Tener el punto de enlace y la contraseña para poder correr el etl.
-### Python 
-* Tener version de python 3.12.13 (ideal).
-* Tener instaladas las siguientes paqueterias: kaggle, pandas, os, sqlalchemy y re.
+
+* Contar con un clúster de base de datos **Aurora PostgreSQL** (`aurora-mod4`) en estado **Available**.
+* Dentro del clúster debe existir una instancia denominada `aurora-mod4-instance-1`.
+* Disponer del **endpoint** y la contraseña de la base de datos para ejecutar el proceso ETL.
+
+### Python
+
+* Tener instalado **Python 3.12.13** (versión recomendada).
+* Tener instaladas las siguientes bibliotecas:
+
+  * `kaggle`
+  * `pandas`
+  * `sqlalchemy`
+  * `psycopg2-binary`
+  * `requests` (si el proyecto descarga archivos mediante HTTP).
+
+> **Nota:** Los módulos `os` y `re` no es necesario instalarlos, ya que forman parte de la biblioteca estándar de Python.
+
 
 ## 📁 Estructura del repositorio
 ```
@@ -306,12 +322,14 @@ Dimensión que representa la posición inicial del jugador dentro del partido.
 | start_position_id |
 
 ### Decisiones de diseño
-En el caso de la NBA, se pueden definir tres granos: 
-* Grano 1: por equipo, juegos que tuvo cada equipo por temporada, partidos ganados vs partidos perdidos. 
-* Grano 2: por partido, partido concretado en una temporada, estadísticas básicas por equipo. 
-* Grano 3: por partido y jugador, registro de estadísticas de un jugador por juego, estadísticas a nivel jugador. 
 
-Para el caso de nuestro proyecto nos vamos a quedar con el Grano 3. Con este grano se nos permite diferencia si un jugador fue titular o no durante el partido; lo cual es beneficioso para nuestro análisis, ya que normalmente los equipos de la NBA siempre comienzan con los jugadores con mejores aptitudes/habilidades; entonces podríamos diferenciar entre titulares o no, también nos permite analizar si hay diferencias en las estadísticas según la posición inicial de cada jugador. 
+En el caso de la NBA, es posible definir tres niveles de granularidad para el análisis de los datos:
+
+* **Grano 1:** Por equipo. Registra los partidos disputados por cada equipo en una temporada, incluyendo victorias y derrotas.
+* **Grano 2:** Por partido. Registra cada partido disputado en una temporada junto con las estadísticas básicas de ambos equipos.
+* **Grano 3:** Por partido y jugador. Registra las estadísticas individuales de cada jugador en cada partido.
+
+Para este proyecto se seleccionó el **Grano 3**, ya que proporciona el mayor nivel de detalle. Esta granularidad permite identificar si un jugador fue titular o suplente en cada encuentro, una característica relevante para el análisis, considerando que los equipos de la NBA suelen iniciar los partidos con sus jugadores de mayor rendimiento. Además, este nivel de detalle facilita comparar el desempeño entre jugadores titulares y suplentes, así como analizar las diferencias en las estadísticas según la posición inicial de cada jugador.
 
 ## :computer: SQL avanzado destacado
 
@@ -503,7 +521,7 @@ where
 ```
 ## :bar_chart: Visualizaciones
 
-Cuatro páginas generadas en Power BI [`04.Dashboard/NBA_Dash_V1`](04.Dashboard/NBA_Dash_V1.pbix). Si se quiere ver la documentación del tablero consultar  [`04.Dashboard/README`](04.Dashboard/README.md).
+Cuatro páginas generadas en Power BI [`04.Dashboard/NBA_Dash_V1`](04.Dashboard/NBA_Dash_V1.pbix). Para obtener más información sobre su estructura y funcionamiento, consulta la documentación disponible en  [`04.Dashboard/README`](04.Dashboard/README.md).
 
 ### 1. Portada 
 ![Portada](04.Dashboard/portada.png)
@@ -519,18 +537,18 @@ Cuatro páginas generadas en Power BI [`04.Dashboard/NBA_Dash_V1`](04.Dashboard/
 ### 4. Tiros 
 ![Tiros](04.Dashboard/tiros.png)
 
-
 ## :mag: Hallazgos principales
 
-1. Entre 2005 y 2019 hubo un aumento promedio de 22.30 (14.47%) puntos por partido; sin embargo, los porcentajes de tiro se mantuvieron en una brecha pequeña. Para el porcentaje de tiros de 3 se mantuvo entre 35.36-36.76, para el porcentaje de tiros de 2 se mantuvo entre 45.32-46.88 y para el tiro libre se mantuvo entre 75.76-78.22; para este último, la gráfica sí tiene una tendencia positiva. Entonces, de este resultado podemos decir que el aumento en la cantidad de puntos por partido no se le puede atribuir a una mejora en los porcentajes de tiro. 
+1. Entre 2005 y 2019 hubo un aumento promedio de **22.30 puntos por partido (14.47 %)**; sin embargo, los porcentajes de tiro se mantuvieron dentro de un rango muy reducido. El porcentaje de efectividad en tiros de tres puntos osciló entre **35.36 % y 36.76 %**; el de tiros de dos puntos, entre **45.32 % y 46.88 %**; y el de tiros libres, entre **75.76 % y 78.22 %**. Para este último sí se observa una ligera tendencia positiva. A partir de estos resultados, se puede concluir que el aumento en la cantidad de puntos por partido no puede atribuirse únicamente a una mejora en los porcentajes de tiro.
 
-2. Para todas las posiciones iniciales hubo una reducción en el promedio de minutos jugados por partido (alrededor de 2 minutos menos), lo que quiere decir que los jugadores en banca tuvieron una mayor rotación durante los juegos, lo que podría explicar el aumento en los puntos por partido. Además, se disminuyó la pérdida de balón por jugador, pero en especial los jugadores que no son titulares, y hubo una mayor cantidad de rebotes por jugador. Con todo lo anterior, podemos decir que las posiciones de balón por equipo fueron de menor tiempo, lo que quiere decir que hubo mayor oportunidad de anotar más puntos. 
+2. En todas las posiciones iniciales se observó una reducción en el promedio de minutos jugados por partido (alrededor de dos minutos menos), lo que indica una mayor rotación de los jugadores durante los encuentros y podría explicar parte del incremento en los puntos por partido. Además, disminuyeron las pérdidas de balón por jugador, especialmente entre los jugadores que no fueron titulares, y aumentó la cantidad de rebotes por jugador. En conjunto, estos resultados sugieren que las **posesiones de balón** fueron más cortas, lo que generó más oportunidades para anotar puntos.
 
-3.  Aunque los porcentajes de tiro no mejoraron, sí hubo un incremento al intentar hacer puntos de 3; prácticamente, por cada tiro de 3 en el 2005, en el año 2019 se hace 2 tiros. Los otros 2 tipos de tiro se mantienen constantes. 
+3. Aunque los porcentajes de tiro no mostraron mejoras significativas, sí se registró un incremento considerable en los intentos de tiros de tres puntos. En términos prácticos, por cada tiro de tres puntos intentado en 2005, en 2019 se intentaban aproximadamente dos. En contraste, los intentos de los otros dos tipos de tiro se mantuvieron prácticamente constantes.
 
-4. De las consultas de SQL avanzado, obtuvimos jugadores que fueron relevantes durante cada año, jugadores como Dirk Nowitzki, Stephen Curry, Kevin Durant y James Harden, los cuales durante estos años de análisis tuvieron un incremento en los tiros de 3 puntos, tanto intentados como hechos, motivando a toda la liga a intentar este tipo de tiro. En términos un poco más matemáticos, un tiro de 2 con un 46 % de efectividad te genera 0.92 puntos por intento; por otro lado, un tiro de 3 con un 36 % de efectividad te genera 1.08 puntos por intento. En consecuencia, si los equipos/jugadores logran subir el porcentaje de efectividad de 3, los puntos se disparan, teniendo como consecuencia que los triples sean estadísticamente superiores a los tiros de media distancia. Por lo cual, explica el incremento en los puntos por partido.     
+4. A partir de las consultas de SQL avanzado se identificó a jugadores que fueron referentes durante los años analizados, como **Dirk Nowitzki, Stephen Curry, Kevin Durant y James Harden**. Estos jugadores incrementaron tanto la cantidad de tiros de tres puntos intentados como la de tiros convertidos, impulsando a gran parte de la liga a adoptar este estilo de juego. Desde una perspectiva matemática, un tiro de dos puntos con una efectividad del **46 %** genera, en promedio, **0.92 puntos por intento**; mientras que un tiro de tres puntos con una efectividad del **36 %** genera **1.08 puntos por intento**. En consecuencia, conforme los equipos incrementaron el volumen de tiros de tres puntos sin sacrificar significativamente su porcentaje de efectividad, la producción ofensiva aumentó. Esto explica, en gran medida, el incremento en los puntos promedio por partido observado durante el periodo de estudio.
 
 ## :books: Referencias
+
 - [nba.data — Bases de datos](https://www.kaggle.com/datasets/nathanlauga/nba-games/data)   
 - Material del módulo: [Tema 02 (Modelo dimensional)](https://github.com/OscarAlvarezC/diplomado-bi-unam-iimas/tree/main/Tema-02), [Tema 04 (ETL Python)](https://github.com/OscarAlvarezC/diplomado-bi-unam-iimas/tree/main/Tema-04), [Tema 05 (SQL avanzado)](https://github.com/OscarAlvarezC/diplomado-bi-unam-iimas/tree/main/Tema-05)
 
